@@ -8,14 +8,18 @@
 
     <EditText
         android:id="@+id/equation"
+
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:inputType="textCapSentences|textMultiLine"
+        android:maxLength="2000"
+        android:maxLines="4"
         android:ems="10"
         android:hint="@string/f_x_y"
-        android:inputType="textPersonName"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/z"
         app:layout_constraintTop_toTopOf="parent" />
@@ -118,6 +122,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:minWidth="0dp"
+        android:onClick="input"
         android:text="4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -466,6 +471,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
         android:text="atan"
+        android:onClick="input"
         android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/sinh"

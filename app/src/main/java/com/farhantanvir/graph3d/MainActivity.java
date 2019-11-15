@@ -124,7 +124,8 @@ public class MainActivity extends AppCompatActivity {
             str="exp(";
         }
         else if(id == R.id.clear){
-
+            equation.setText("");
+            return;
         }
         else {
             Button b = (Button)view;
