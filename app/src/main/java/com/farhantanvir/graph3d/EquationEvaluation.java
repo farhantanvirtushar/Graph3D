@@ -17,12 +17,12 @@ public class EquationEvaluation{
 
     int postFixTerms;
     boolean invalid;
-    boolean parathensisMismatch;
+    boolean parenthesesMismatch;
     EquationEvaluation(String str)
     {
         equation = str;
         invalid=false;
-        parathensisMismatch=false;
+        parenthesesMismatch=false;
         parse = new String[100];
         numOfTerms=0;
         postFixTerms = 0;
@@ -56,14 +56,14 @@ public class EquationEvaluation{
             }
             if(a<0)
             {
-                parathensisMismatch=true;
+                parenthesesMismatch=true;
                 return;
             }
 
         }
         if(a!=0)
         {
-            parathensisMismatch = true;
+            parenthesesMismatch = true;
             return;
         }
 
@@ -203,7 +203,7 @@ public class EquationEvaluation{
     }
     void convertToPostFix()
     {
-        if(parathensisMismatch)
+        if(parenthesesMismatch)
         {
             //System.out.println("parenthesis mismatch");
             return;

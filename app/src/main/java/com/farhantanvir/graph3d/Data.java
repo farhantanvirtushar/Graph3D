@@ -1,8 +1,9 @@
 package com.farhantanvir.graph3d;
 
 public class Data {
-    public String equation;
-    Data(String str){
-        equation = str;
+
+    public EquationEvaluation equationEvaluation;
+    Data(EquationEvaluation equationEvaluation){
+        this.equationEvaluation=equationEvaluation;
     }
 }

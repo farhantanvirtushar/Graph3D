@@ -10,16 +10,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
 
     static Data data;
+    EquationEvaluation equationEvaluation;
+    TextView warning;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        warning = (TextView)findViewById(R.id.invalidWarning);
     }
 
     @Override
@@ -44,9 +49,29 @@ public class MainActivity extends AppCompatActivity {
     public void plot(View view){
         EditText equation = (EditText)findViewById(R.id.equation);
         String equationStr = equation.getText().toString();
-        data = new Data(equationStr);
+        equationEvaluation = new EquationEvaluation(equationStr);
+
+        warning = (TextView)findViewById(R.id.invalidWarning);
+
+        if (equationEvaluation.parenthesesMismatch){
+            warning.setText("Parentheses is not matched");
+            return;
+        }
+        float test = equationEvaluation.evaluate(1,1);
+        if((equationEvaluation.invalid))
+        {
+            warning.setText("Invalid Equation");
+            return;
+        }
+        data = new Data(equationEvaluation);
 
         Intent intent = new Intent(this,PlotGraph.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        warning.setText("");
     }
 }
