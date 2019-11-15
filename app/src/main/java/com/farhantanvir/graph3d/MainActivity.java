@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.graph_menu,menu);
+
         return true;
     }
 
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         if(id == R.id.about)
         {
             //Toast.makeText(this,"hello world",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this,About.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
