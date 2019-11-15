@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Graph3D</string>
+    <string name="about">About</string>
+    <string name="f_x_y">f(x,y)</string>
+    <string name="z">z =</string>
+    <string name="plot">Plot</string>
+</resources>
