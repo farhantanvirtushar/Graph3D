@@ -3,15 +3,19 @@ package com.farhantanvir.graph3d;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    static Data data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,5 +39,14 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void plot(View view){
+        EditText equation = (EditText)findViewById(R.id.equation);
+        String equationStr = equation.getText().toString();
+        data = new Data(equationStr);
+
+        Intent intent = new Intent(this,PlotGraph.class);
+        startActivity(intent);
     }
 }
