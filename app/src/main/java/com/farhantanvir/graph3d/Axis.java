@@ -181,7 +181,7 @@ public class Axis {
 
         // Draw the triangle
         GLES20.glDrawArrays(GLES20.GL_LINES, 0, vertexCount);
-        GLES20.glLineWidth(20.0f);
+        GLES20.glLineWidth(5.0f);
 
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(positionHandle);

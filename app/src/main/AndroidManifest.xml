@@ -18,11 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".About"
-            android:parentActivityName=".MainActivity"></activity>
+
+        <activity
+            android:name=".About"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".PlotGraph"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation"
