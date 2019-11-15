@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     static Data data;
     EquationEvaluation equationEvaluation;
+    EditText equation;
     TextView warning;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         warning = (TextView)findViewById(R.id.invalidWarning);
+        equation = (EditText)findViewById(R.id.equation);
     }
 
     @Override
@@ -47,11 +50,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void plot(View view){
-        EditText equation = (EditText)findViewById(R.id.equation);
+
         String equationStr = equation.getText().toString();
         equationEvaluation = new EquationEvaluation(equationStr);
 
-        warning = (TextView)findViewById(R.id.invalidWarning);
+
 
         if (equationEvaluation.parenthesesMismatch){
             warning.setText("Parentheses is not matched");
@@ -69,6 +72,69 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void input(View view){
+        String str="";
+        int id = view.getId();
+        if(id == R.id.zero)
+        {
+            str="0";
+        }
+        else if(id == R.id.one)
+        {
+            str="1";
+        }
+        else if(id == R.id.two)
+        {
+            str="2";
+        }
+        else if(id == R.id.three)
+        {
+            str="3";
+        }else if(id == R.id.four)
+        {
+            str="4";
+        }else if(id == R.id.five)
+        {
+            str="5";
+        }else if(id == R.id.six)
+        {
+            str="6";
+        }else if(id == R.id.seven)
+        {
+            str="7";
+        }else if(id == R.id.eight)
+        {
+            str="8";
+        }
+        else if(id == R.id.nine)
+        {
+            str="9";
+        }
+        else if((id == R.id.point)||(id == R.id.plus)||(id == R.id.minus)||(id == R.id.division)||(id == R.id.mul)||(id == R.id.par_open)||(id == R.id.par_close)||(id == R.id.power)||(id == R.id.x)||(id == R.id.y))
+        {
+            Button b = (Button)view;
+            str= b.getText().toString();
+        }
+        else if((id == R.id.sqrt))
+        {
+            str="sqrt(";
+        }
+        else if((id == R.id.exp))
+        {
+            str="exp(";
+        }
+        else if(id == R.id.clear){
+
+        }
+        else {
+            Button b = (Button)view;
+            str= b.getText().toString();
+            str+="(";
+        }
+        String text = equation.getText().toString();
+        text=text+str;
+        equation.setText(text);
+    }
     @Override
     protected void onResume() {
         super.onResume();
