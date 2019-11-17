@@ -143,7 +143,7 @@ public class Graph {
     }
 
 
-    public void draw(float[] mvpMatrix, float[] mvmMatrix) throws Exception{
+    public void draw(float[] mvpMatrix, float[] mvmMatrix){
 
         // Add program to OpenGL ES environment
         GLES20.glUseProgram(mProgram);
@@ -156,14 +156,7 @@ public class Graph {
         lightHandle = GLES20.glGetUniformLocation(mProgram,"u_LightPos");
 
 
-        //Log.e(TAG, "draw: position handle = "+positionHandle );
-        //Log.e(TAG, "draw: color handle = "+colorHandle );
 
-        if(positionHandle == -1)
-        {
-            //Log.e(TAG, "draw: position handle = "+positionHandle );
-            //throw new Exception();
-        }
         // Enable a handle to the triangle vertices
         GLES20.glEnableVertexAttribArray(positionHandle);
 

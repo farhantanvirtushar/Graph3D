@@ -12,7 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.Stack;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     EquationEvaluation equationEvaluation;
     EditText equation;
     TextView warning;
+    static Stack<Integer> prevTypedChars;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         warning = (TextView)findViewById(R.id.invalidWarning);
         equation = (EditText)findViewById(R.id.equation);
+        prevTypedChars = new Stack<>();
     }
 
     @Override
@@ -78,66 +81,61 @@ public class MainActivity extends AppCompatActivity {
     public void input(View view){
         String str="";
         int id = view.getId();
-        if(id == R.id.zero)
+        if((id == R.id.zero)||(id == R.id.one)||(id == R.id.two)||(id == R.id.three)||(id == R.id.four)||(id == R.id.five)||(id == R.id.six)||(id == R.id.seven)||(id == R.id.eight)||(id == R.id.nine))
         {
-            str="0";
+            Button b = (Button)view;
+            str= b.getText().toString();
+            prevTypedChars.push(1);
         }
-        else if(id == R.id.one)
-        {
-            str="1";
-        }
-        else if(id == R.id.two)
-        {
-            str="2";
-        }
-        else if(id == R.id.three)
-        {
-            str="3";
-        }else if(id == R.id.four)
-        {
-            str="4";
-        }else if(id == R.id.five)
-        {
-            str="5";
-        }else if(id == R.id.six)
-        {
-            str="6";
-        }else if(id == R.id.seven)
-        {
-            str="7";
-        }else if(id == R.id.eight)
-        {
-            str="8";
-        }
-        else if(id == R.id.nine)
-        {
-            str="9";
-        }
+
         else if((id == R.id.point)||(id == R.id.plus)||(id == R.id.minus)||(id == R.id.division)||(id == R.id.mul)||(id == R.id.par_open)||(id == R.id.par_close)||(id == R.id.power)||(id == R.id.x)||(id == R.id.y))
         {
             Button b = (Button)view;
             str= b.getText().toString();
+            prevTypedChars.push(1);
         }
         else if((id == R.id.sqrt))
         {
             str="sqrt(";
+            prevTypedChars.push(5);
         }
         else if((id == R.id.exp))
         {
             str="exp(";
+            prevTypedChars.push(4);
         }
-        else if(id == R.id.clear){
-            equation.setText("");
+        else if(id == R.id.del){
+            byte chars[] = equation.getText().toString().getBytes();
+
+            //Log.e(TAG, " string size : "+chars.length);
+            if(!prevTypedChars.empty())
+            {
+                int n = prevTypedChars.pop();
+
+                int len = chars.length;
+                int i=len-1;
+                while (n>0){
+                    chars[i]='\0';
+                    i--;
+                    n--;
+                }
+                //Log.e(TAG, " stack size : "+prevTypedChars.size());
+                equation.setText((new String(chars)).trim());
+            }
+
             return;
         }
         else {
             Button b = (Button)view;
             str= b.getText().toString();
             str+="(";
+            int len = str.length();
+            prevTypedChars.push(len);
         }
         String text = equation.getText().toString();
         text=text+str;
         equation.setText(text);
+        //Log.e(TAG, " stack size : "+prevTypedChars.size());
     }
     @Override
     protected void onResume() {

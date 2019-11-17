@@ -3,9 +3,12 @@ package com.farhantanvir.graph3d;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
+import android.util.Log;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import static android.content.ContentValues.TAG;
 
 public class MyGLRenderer implements GLSurfaceView.Renderer {
 
@@ -145,28 +148,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         }
 
 
-
-        /*k=0;
-        while (k<light.length)
-        {
-            float a=lightPos[0]-vertex[k];
-            float b=lightPos[1]-vertex[k];
-            float c=lightPos[2]-vertex[k];
-            float light_length = (float)Math.sqrt((a*a)+(b*b)+(c*c));
-
-            a = a/light_length;
-            b = b/light_length;
-            c = c/light_length;
-
-            light[k]=a;
-            k++;
-            light[k]=b;
-            k++;
-            light[k]=c;
-            k++;
-
-        }*/
-
         float c1[] =  new float[(x_len-1)*(y_len-1)*24];
         int col_len = c1.length;
         k=0;
@@ -175,7 +156,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         while (k<col_len)
         {
             //v = dot(normal[l],normal[l+1],normal[l+2],light[l],light[l+1],light[l+2]);
-            float r = (float)Math.sqrt((vertex[l]*vertex[l])+(vertex[l+1]*vertex[l+1])+(vertex[l+2]*vertex[l+2]));
+            float r = (float)Math.sqrt((vertex[l]*vertex[l])+(vertex[l+1]*vertex[l+1]));
             l=l+3;
             r = r/(15.0f);
             c1[k]=(1.0f-r)*v;
@@ -191,8 +172,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         }
         graph = new Graph(vertex,c1,lightPos,normal);
 
-        float axisVertex[] = new float[90];
-        float axisColor[] = new float[120];
+        float axisVertex[] = new float[120];
+        float axisColor[] = new float[160];
         k=0;
         float x = -12.0f;
         while (!(x>12))
@@ -219,6 +200,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
             y=y+4.0f;
         }
 
+        // z axis
         axisVertex[k]=0.0f;
         axisVertex[k+1]=0.0f;
         axisVertex[k+2]=-10.0f;
@@ -226,7 +208,18 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         axisVertex[k+4]=0.0f;
         axisVertex[k+5]=10.0f;
 
-        k=0;
+        k+=6;
+        // axis label
+
+        //x
+        axisVertex[k]=12.2f; axisVertex[k+1]=0.5f; axisVertex[k+2]=0.0f; axisVertex[k+3]=13.2f; axisVertex[k+4]=-0.5f; axisVertex[k+5]=0.0f;k=k+6;
+        axisVertex[k]=13.2f; axisVertex[k+1]=0.5f; axisVertex[k+2]=0.0f; axisVertex[k+3]=12.2f; axisVertex[k+4]=-0.5f; axisVertex[k+5]=0.0f;k=k+6;
+        //y
+        axisVertex[k]=-0.5f; axisVertex[k+1]=13.2f; axisVertex[k+2]=0.0f; axisVertex[k+3]=0.0f; axisVertex[k+4]=12.7f; axisVertex[k+5]=0.0f;k=k+6;
+        axisVertex[k]=0.5f; axisVertex[k+1]=13.2f; axisVertex[k+2]=0.0f; axisVertex[k+3]=0.0f; axisVertex[k+4]=12.7f; axisVertex[k+5]=0.0f;k=k+6;
+        axisVertex[k]=0.0f; axisVertex[k+1]=12.7f; axisVertex[k+2]=0.0f; axisVertex[k+3]=0.0f; axisVertex[k+4]=12.2f; axisVertex[k+5]=0.0f;k=k+6;
+
+
         for(int i=0;i<120;i++)
         {
             axisColor[i]=0.0f;
@@ -247,6 +240,15 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
             }
 
         }
+        k = 120;
+        //x color
+        axisColor[k]=0.0f; axisColor[k+1]=0.0f; axisColor[k+2]=1.0f; axisColor[k+3]=1.0f; axisColor[k+4]=0.0f; axisColor[k+5]=0.0f; axisColor[k+6]=1.0f; axisColor[k+7]=1.0f;k=k+8;
+        axisColor[k]=0.0f; axisColor[k+1]=0.0f; axisColor[k+2]=1.0f; axisColor[k+3]=1.0f; axisColor[k+4]=0.0f; axisColor[k+5]=0.0f; axisColor[k+6]=1.0f; axisColor[k+7]=1.0f;k=k+8;
+        //y color
+        axisColor[k]=1.0f; axisColor[k+1]=0.0f; axisColor[k+2]=0.0f; axisColor[k+3]=1.0f; axisColor[k+4]=1.0f; axisColor[k+5]=0.0f; axisColor[k+6]=0.0f; axisColor[k+7]=1.0f;k=k+8;
+        axisColor[k]=1.0f; axisColor[k+1]=0.0f; axisColor[k+2]=0.0f; axisColor[k+3]=1.0f; axisColor[k+4]=1.0f; axisColor[k+5]=0.0f; axisColor[k+6]=0.0f; axisColor[k+7]=1.0f;k=k+8;
+        axisColor[k]=1.0f; axisColor[k+1]=0.0f; axisColor[k+2]=0.0f; axisColor[k+3]=1.0f; axisColor[k+4]=1.0f; axisColor[k+5]=0.0f; axisColor[k+6]=0.0f; axisColor[k+7]=1.0f;k=k+8;
+
         axis = new Axis(axisVertex,axisColor);
 
     }
@@ -281,7 +283,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
         // Set the camera position (View matrix)
-        Matrix.setLookAtM(viewMatrix, 0, 0, 0, 20, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+        Matrix.setLookAtM(viewMatrix, 0, -10.0f, -10.0f, 20, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 
         // Calculate the projection and view transformation
         Matrix.multiplyMM(vPMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
@@ -299,24 +301,18 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         Matrix.rotateM(rotationMatrix, 0, yAngle, 1, 0, 0);
         Matrix.rotateM(rotationMatrix, 0, xAngle, 0, 1, 0);
 
-       // Matrix.setRotateM(rotationMatrix, 0, yAngle, 0, 1, 0);
-
 
         // Combine the rotation matrix with the projection and camera view
         // Note that the vPMatrix factor *must be first* in order
         // for the matrix multiplication product to be correct.
         Matrix.multiplyMM(scratch, 0, vPMatrix, 0, rotationMatrix, 0);
 
-        // Draw triangle
-        try {
+        // Draw axis
 
-            axis.draw(scratch);
+        axis.draw(scratch);
 
-            graph.draw(scratch,vMVMatrix);
-        }catch (Exception e){
-
-        }
-
+        // Draw graph
+        graph.draw(scratch,vMVMatrix);
     }
 
     public static int loadShader(int type, String shaderCode){

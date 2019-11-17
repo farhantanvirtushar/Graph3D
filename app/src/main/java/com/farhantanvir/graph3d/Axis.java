@@ -131,7 +131,7 @@ public class Axis {
     }
 
 
-    public void draw(float[] mvpMatrix) throws Exception{
+    public void draw(float[] mvpMatrix){
 
         // Add program to OpenGL ES environment
         GLES20.glUseProgram(mProgram);
@@ -142,14 +142,7 @@ public class Axis {
         colorHandle    = GLES20.glGetAttribLocation(mProgram, "aColor");
 
 
-        //Log.e(TAG, "draw: position handle = "+positionHandle );
-        //Log.e(TAG, "draw: color handle = "+colorHandle );
 
-        if(positionHandle == -1)
-        {
-            //Log.e(TAG, "draw: position handle = "+positionHandle );
-            //throw new Exception();
-        }
         // Enable a handle to the triangle vertices
         GLES20.glEnableVertexAttribArray(positionHandle);
 
