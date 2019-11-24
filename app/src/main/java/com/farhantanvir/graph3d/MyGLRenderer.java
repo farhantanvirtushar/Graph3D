@@ -1,5 +1,7 @@
 package com.farhantanvir.graph3d;
 
+
+import android.graphics.Color;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
@@ -9,6 +11,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import static android.content.ContentValues.TAG;
+import static java.lang.Float.NaN;
 
 public class MyGLRenderer implements GLSurfaceView.Renderer {
 
@@ -54,6 +57,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
                 float x = (float) ((((float)j)-(x_len/2))/unit);
                 z[i][j]= (float)(equationEvaluation.evaluate(x,y));
                 //z[i][j]=((float)Math.sqrt(100-((x*x)+(y*y))));
+                float maxVal = 30.0f;
+                if((z[i][j]>15.0f)||(z[i][j]<-15.0f)){
+                    //z[i][j]=NaN;
+                }
             }
         }
         //float c1[] = { 1.0f, 0, 0, 1.0f};
@@ -153,17 +160,31 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         k=0;
         l=0;
         float v = 1.0f;
+        float r = 15.0f;
+        float hsv[]={1.0f,1.0f,0.5f};
         while (k<col_len)
         {
             //v = dot(normal[l],normal[l+1],normal[l+2],light[l],light[l+1],light[l+2]);
-            float r = (float)Math.sqrt((vertex[l]*vertex[l])+(vertex[l+1]*vertex[l+1]));
+            float x = (float)Math.sqrt((vertex[l]*vertex[l])+(vertex[l+1]*vertex[l+1]));
             l=l+3;
-            r = r/(15.0f);
-            c1[k]=(1.0f-r)*v;
+            hsv[0]=(x*360.0f)/r;
+            int colorHexVal = Color.HSVToColor(hsv);
+
+            //Log.e(TAG, "color val = "+colorHexVal );
+            //int colorHexVal = (int) (((16777215.0f-10.0f)/r)*x + 10.0f);
+
+            float red = Color.red(colorHexVal);
+            float green = Color.green(colorHexVal);
+            float blue = Color.blue(colorHexVal);
+            //Log.e(TAG, "color"+red+","+green+","+blue);
+            red = red/128.0f;
+            green = green/128.0f;
+            blue = blue/128.0f;
+            c1[k]=red;
             k++;
-            c1[k]=r*v;
+            c1[k]=green;
             k++;
-            c1[k]=0;
+            c1[k]=blue;
             k++;
             c1[k]=1.0f;
             k++;
@@ -250,6 +271,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         axisColor[k]=1.0f; axisColor[k+1]=0.0f; axisColor[k+2]=0.0f; axisColor[k+3]=1.0f; axisColor[k+4]=1.0f; axisColor[k+5]=0.0f; axisColor[k+6]=0.0f; axisColor[k+7]=1.0f;k=k+8;
 
         axis = new Axis(axisVertex,axisColor);
+
 
     }
 

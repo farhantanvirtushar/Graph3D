@@ -23,7 +23,7 @@ public class Graph {
 
                              "   float distance = length(u_LightPos - modelViewVertex);             \n"+
                              "   vec3 lightVector = normalize(u_LightPos - modelViewVertex);        \n"+
-                             "   float diffuse = max(dot(modelViewNormal, lightVector),0.1);       \n"+
+                             "   float diffuse = max(abs(dot(modelViewNormal, lightVector)),0.1);       \n"+
 
                              "   diffuse = diffuse * (1.0 / (1.0 + (0.000025 * distance * distance)));  \n"+
 
