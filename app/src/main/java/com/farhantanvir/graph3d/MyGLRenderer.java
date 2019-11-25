@@ -68,7 +68,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         float normal[] = new float[(x_len-1)*(y_len-1)*18];
         //float light[] = new float[(x_len-1)*(y_len-1)*18];
         //float c1[] =  new float[(x_len-1)*(y_len-1)*24];
-        int len_vertex = vertex.length;
+        
         int k=0;
         int l=0;
         for(int i=0;i<(x_len-1);i++)
